@@ -19,6 +19,7 @@ class Ship(
     position += velocity * dt
     rotation += rotationSpeed * dt
     compartments.foreach(_.tick(dt))
+//    println(s"${velocity.toShortString} ${position.toShortString}")
   }
 
   override def drawableSnapshot: Option[DrawableSnapshot] =
