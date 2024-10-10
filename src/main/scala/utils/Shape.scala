@@ -8,7 +8,7 @@ import utils.math.*
 import scala.collection.immutable.ArraySeq
 
 
-sealed trait Shape
+trait Shape
 
 object Shape {
   trait Circle(val center: V2 = V2.ZERO, val radius: Scalar = 1.0) extends Shape {
@@ -18,12 +18,12 @@ object Shape {
   }
 
 
-  trait Rectangle(val center: V2 = V2.ZERO, val halExtents: V2 = V2(.5, .5), val ox: V2 = V2.ox) extends Shape {
+  trait Rectangle(val center: V2 = V2.ZERO, val halfExtents: V2 = V2(.5, .5), val ox: V2 = V2.ox) extends Shape {
     val angles = ArraySeq(
-      center + ox * halExtents.x - ox.rotate90CCW * halExtents.y,
-      center + ox * halExtents.x + ox.rotate90CCW * halExtents.y,
-      center - ox * halExtents.x + ox.rotate90CCW * halExtents.y,
-      center - ox * halExtents.x - ox.rotate90CCW * halExtents.y,
+      center + ox * halfExtents.x - ox.rotate90CCW * halfExtents.y,
+      center + ox * halfExtents.x + ox.rotate90CCW * halfExtents.y,
+      center - ox * halfExtents.x + ox.rotate90CCW * halfExtents.y,
+      center - ox * halfExtents.x - ox.rotate90CCW * halfExtents.y,
     )
 
     val sides = (angles.last +: angles)
@@ -33,7 +33,7 @@ object Shape {
 
     def aabb: AARectangle = AARectangle.fromPoints(angles)
     def atTransform(scale: Scalar, rotate: Scalar, translate: V2): ShapeAtTransform =
-      RectangleShapeAtTransform((center * scale).rotate(rotate) + translate, halExtents * scale, ox.rotate(rotate))
+      RectangleShapeAtTransform((center * scale).rotate(rotate) + translate, halfExtents * scale, ox.rotate(rotate))
   }
 }
 

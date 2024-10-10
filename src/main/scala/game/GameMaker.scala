@@ -1,5 +1,6 @@
 package game
 
+import game.ship.ShipMaker
 import utils.datastructures.spatial.AARectangle
 import utils.math.planar.V2
 
@@ -10,7 +11,13 @@ object GameMaker {
     val star = new Star(V2.ZERO, 1)
     game.entities = star +: game.entities
     addRandomStars(game, 25)
+    
+    
+    val ship = ShipMaker.makeShip()
+    game.addEntity(ship)
     game
+  end initGame
+    
 
   def addRandomStars(game: Game, count: Int): Unit = {
     val toAvoid = AARectangle(V2(-1000000), V2(1000000))

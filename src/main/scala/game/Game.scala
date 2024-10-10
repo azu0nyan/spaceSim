@@ -16,5 +16,8 @@ class Game {
   
   def getDrawablesSnapshot(minPos: V2, maxPos: V2): Seq[DrawableSnapshot] =
     entities.flatMap(_.drawableSnapshot) //todo use min max
+    
+  def addEntity(entity: Entity): Unit = 
+    entities = entity +: entities  
 }
 
