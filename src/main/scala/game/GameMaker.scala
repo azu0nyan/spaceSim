@@ -3,6 +3,7 @@ package game
 import game.ship.ShipMaker
 import utils.datastructures.spatial.AARectangle
 import utils.math.planar.V2
+import utils.math._
 
 object GameMaker {
   def initGame(): Game =
@@ -12,9 +13,13 @@ object GameMaker {
     game.entities = star +: game.entities
     addRandomStars(game, 25)
     
-    
-    val ship = ShipMaker.makeShip()
-    game.addEntity(ship)
+    for(i <- 0 until 64) {
+      val ship = ShipMaker.makeShip()
+      ship.position = V2(400, 0).rotate(i * TWO_PI / 64.0)
+      ship.rotation = i * TWO_PI / 64.0
+
+      game.addEntity(ship)
+    }
     game
   end initGame
     
