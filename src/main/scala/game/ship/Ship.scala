@@ -8,16 +8,16 @@ import utils.math.planar.V2
 import java.awt.Color
 
 class Ship(
+            var velocity: V2 = V2.ZERO,
+            var angularSpeed: Scalar = 0.0,
             var position: V2 = V2.ZERO,
             var rotation: Scalar = 0.0,
-            var velocity: V2 = V2.ZERO,
-            var rotationSpeed: Scalar = 0.0,
             var compartments: Seq[Compartment] = Seq()
           ) extends Entity {
 
   def tick(dt: Scalar): Unit = {
     position += velocity * dt
-    rotation += rotationSpeed * dt
+    rotation += angularSpeed * dt
     compartments.foreach(_.tick(dt))
 //    println(s"${velocity.toShortString} ${position.toShortString}")
   }

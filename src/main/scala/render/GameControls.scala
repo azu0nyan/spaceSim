@@ -18,11 +18,11 @@ object GameControls {
     d.addKeyBinding(KeyEvent.VK_S, ship.velocity = V2(-20, 0).rotate(ship.rotation), true)
     d.addKeyBinding(KeyEvent.VK_S, ship.velocity = V2(0, 0), false)
     
-    d.addKeyBinding(KeyEvent.VK_A, ship.rotationSpeed = 1.0, true)
-    d.addKeyBinding(KeyEvent.VK_A, ship.rotationSpeed = 0.0, false)
+    d.addKeyBinding(KeyEvent.VK_A, ship.angularSpeed = 1.0, true)
+    d.addKeyBinding(KeyEvent.VK_A, ship.angularSpeed = 0.0, false)
     
-    d.addKeyBinding(KeyEvent.VK_D, ship.rotationSpeed = -1.0, true)
-    d.addKeyBinding(KeyEvent.VK_D, ship.rotationSpeed = 0.0, false)
+    d.addKeyBinding(KeyEvent.VK_D, ship.angularSpeed = -1.0, true)
+    d.addKeyBinding(KeyEvent.VK_D, ship.angularSpeed = 0.0, false)
     
     
     

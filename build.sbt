@@ -12,3 +12,5 @@ lazy val root = (project in file("."))
   .dependsOn(utilsLib)
   .dependsOn(utilsLib2)
 
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % "test"
