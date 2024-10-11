@@ -5,7 +5,7 @@ import utils.math.planar.V2
 
 object PolygonOps {
 
-  case class MassData(var mass: Scalar, var centroid: V2, var inertia: Scalar)
+  
   def computeMass(vertices: IndexedSeq[V2], density: Scalar): MassData = {
     // Polygon mass, centroid, and inertia.
     // Let rho be the polygon density in mass per unit area.

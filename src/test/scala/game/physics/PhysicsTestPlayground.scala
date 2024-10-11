@@ -31,11 +31,11 @@ object PhysicsTestPlayground {
 
 
     val shape = AARectangle(V2(-1), V2(1))
-    
+
     val md = PolygonOps.computeMass(shape.vertices.toIndexedSeq, 1)
-    
+
     println(md)
-    
+
     val rigidBody = new RigidBody(
 
     ) {
@@ -60,10 +60,10 @@ object PhysicsTestPlayground {
 
 
     Drawing.addDrawer(g => {
-      
+
       val poly = shape.vertices
-      
-      DrawingUtils.drawPolygon(shape.toPolygon.rotate(rigidBody.angle).map(_ + rigidBody.position), g,  true, Color.RED)
+
+      DrawingUtils.drawPolygon(shape.toPolygon.rotate(rigidBody.angle).map(_ + rigidBody.position), g, true, Color.RED)
 
       var forceVector = V2.ZERO
       if (Keys.upPressed) forceVector += V2(0, 1)
@@ -75,11 +75,11 @@ object PhysicsTestPlayground {
 
       g.setFont(new Font("", Font.BOLD, 30))
       g.setColor(Color.WHITE)
-      val debugStr = s"pos:${rigidBody.position.toShortString} rot:${rigidBody.angle} vel:${rigidBody.linearVelocity.toShortString} angVel:${rigidBody.angularVelocity} + force ${forceVector.toShortString} "
+      val debugStr = f"pos:${rigidBody.position.toShortString}%-20s rot:${rigidBody.angle}%-7.3f vel:${rigidBody.linearVelocity.toShortString}%-20s angVel:${rigidBody.angularVelocity}%-7.3f + force ${forceVector.toShortString}%-20s "
       g.drawString(debugStr, 10, 60)
       if (forceVector.nonZero) {
         println(forceVector)
-        rigidBody.applyForce(forceVector, V2(0.0, 0.4))
+        rigidBody.applyForce(forceVector, rigidBody.position + V2(0.0, 0.4))
       }
       rigidBody.tick(1 / 60.0)
     })
