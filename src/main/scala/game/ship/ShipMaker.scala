@@ -9,22 +9,22 @@ object ShipMaker {
     val hull = Compartment(
       modules = Seq(
         CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
-          offset = V2(-20, 0),
+          position = V2(-20, 0),
           shape = RectangleBasicShape(halfExtents = V2(1, 3)),
           materialProperties = new MaterialProperties(java.awt.Color.RED)
         )),
         CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
-          offset = V2(20, 0),
+          position = V2(20, 0),
           shape = RectangleBasicShape(halfExtents = V2(1, 3)),
           materialProperties = new MaterialProperties(java.awt.Color.RED)
         )),
         CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
-          offset = V2(-15, -2),
+          position = V2(-15, -2),
           shape = RectangleBasicShape(halfExtents = V2(2, 1)),
           materialProperties = new MaterialProperties(java.awt.Color.WHITE)
         )),
         CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
-          offset = V2(5, -2),
+          position = V2(5, -2),
           shape = RectangleBasicShape(halfExtents = V2(2, 1)),
           materialProperties = new MaterialProperties(java.awt.Color.WHITE)
         )),
@@ -39,12 +39,12 @@ object ShipMaker {
 
     def engineModules() = Seq(
       CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
-        offset = V2(-5, -0.5),
+        position = V2(-5, -0.5),
         shape = CircleBasicShape(radius = .5),
         materialProperties = new MaterialProperties(java.awt.Color.WHITE)
       )),
       CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
-        offset = V2(-5, 0.5),
+        position = V2(-5, 0.5),
         shape = CircleBasicShape(radius = .5),
         materialProperties = new MaterialProperties(java.awt.Color.WHITE)
       )),
@@ -52,7 +52,7 @@ object ShipMaker {
     val engine1 = Compartment(
       modules = engineModules(),
       physicsProperties = new PhysicsProperties(
-        offset = V2(-10, 8),
+        position = V2(-10, 8),
         shape = RectangleBasicShape(halfExtents = V2(5, 2)),
         materialProperties = new MaterialProperties(java.awt.Color.GRAY.darker())
       )
@@ -61,7 +61,7 @@ object ShipMaker {
     val engine2 = Compartment(
       modules = engineModules(),
       physicsProperties = new PhysicsProperties(
-        offset = V2(-10, -8),
+        position = V2(-10, -8),
         shape = RectangleBasicShape(halfExtents = V2(5, 2)),
         materialProperties = new MaterialProperties(java.awt.Color.GRAY.darker())
       )

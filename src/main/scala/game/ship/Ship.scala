@@ -36,7 +36,7 @@ class Ship(
         cmp.modules
           .map { m =>
             val shapeAtTransform = m.physicsProperties.shapeAtTransform
-              .atTransform(1.0, cmp.physicsProperties.rotation, cmp.physicsProperties.offset)
+              .atTransform(1.0, cmp.physicsProperties.rotation, cmp.physicsProperties.position)
               .atTransform(1.0, rotation, position)
             ShapeWithDrawingParams(shapeAtTransform,
               m.physicsProperties.materialProperties.color,
