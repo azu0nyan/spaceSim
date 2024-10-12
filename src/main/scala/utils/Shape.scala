@@ -8,7 +8,9 @@ import utils.math.*
 import scala.collection.immutable.ArraySeq
 
 
-trait Shape
+trait Shape {
+  def atTransform(scale: Scalar, rotate: Scalar, translate: V2): ShapeAtTransform
+}
 
 object Shape {
   trait Circle(val center: V2 = V2.ZERO, val radius: Scalar = 1.0) extends Shape {
