@@ -1,7 +1,9 @@
 package game.ship
 
+import game.entity.WorldEntity
+import game.physics.{EntityControlledByRigidBody, MassData}
 import utils.math.planar.V2
-import utils.Shapes._
+import utils.Shapes.*
 
 object ShipMaker {
 
@@ -34,7 +36,7 @@ object ShipMaker {
         materialProperties = new MaterialProperties(java.awt.Color.GRAY)
       )
     )
-    
+
     //def!!!!! important
 
     def engineModules() = Seq(
@@ -78,4 +80,7 @@ object ShipMaker {
 
     ship
   }
+  
+  def makeShipEntity(): WorldEntity[Ship] =
+    EntityControlledByRigidBody(ShipMaker.makeShip(), MassData(100, V2.ZERO, 100))
 }

@@ -14,11 +14,11 @@ object GameMaker {
     addRandomStars(game, 25)
     
     for(i <- 0 until 64) {
-      val ship = ShipMaker.makeShip()
-      ship.position = V2(400, 0).rotate(i * TWO_PI / 64.0)
-      ship.rotation = i * TWO_PI / 64.0
+      val ship = ShipMaker.makeShipEntity()
+      ship.setLocalPosition(V2(400, 0).rotate(i * TWO_PI / 64.0))
+      ship.setLocalRotation(i * TWO_PI / 64.0)
 
-      game.addEntity(ship)
+      game.addWorldEntity(ship)
     }
     game
   end initGame

@@ -2,7 +2,6 @@ package game.physics
 
 import drawing.Drawing
 import drawing.library.DrawingUtils
-import game.ship.RigidBody
 import utils.datastructures.IntV2
 import utils.datastructures.spatial.AARectangle
 import utils.math.planar.V2
@@ -81,7 +80,7 @@ object PhysicsTestPlayground {
         println(forceVector)
         rigidBody.applyForce(forceVector, rigidBody.position + V2(0.0, 0.4))
       }
-      rigidBody.tick(1 / 60.0)
+      rigidBody.tickAndApply(1 / 60.0)
     })
 
   }

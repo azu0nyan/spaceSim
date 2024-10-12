@@ -1,22 +1,22 @@
-package game.ship
+package game.physics
 
-import game.Entity
-import utils.math.Scalar
+import game.entity.Entity
+import utils.math._
 import utils.math.planar.V2
 
-trait RigidBody(
+class RigidBody(
                  var position: V2 = V2.ZERO,
                  var angle: Scalar = 0.0,
                  var linearVelocity: V2 = V2.ZERO,
                  var angularVelocity: Scalar = 0.0,
-                 var mass: Scalar = 1.0
-               ) extends Entity {
+                 var mass: Scalar = 1.0,
+
+                 /** Rotational inertia about the center of mass. */
+                 var m_I: Scalar = 0.0
+               ) {
 
   var force = V2.ZERO
   var torque = 0.0
-
-  /** Rotational inertia about the center of mass. */
-  var m_I = 0.0
 
   def m_I_inv = 1.0 / m_I
 
@@ -76,14 +76,25 @@ trait RigidBody(
       angularVelocity * tempX + linearVelocity.y)
   }
 
-  def tick(dt: Scalar): Unit = {
+
+  def tickAndGetNewPosition(dt: Scalar): (V2, Scalar) = {
     linearVelocity += force * invMass * dt
     angularVelocity += m_I_inv * torque * dt
 
-    position += linearVelocity * dt
-    angle += angularVelocity * dt
-    
+    val newPosition = position + linearVelocity * dt
+    val newAngle = angle + angularVelocity * dt
+
     force = V2.ZERO
     torque = 0.0
+
+    (newPosition, newAngle)
+  }
+
+  /** for debug */
+  def tickAndApply(dt: Scalar): Unit = {
+    val (nposition, nangle) = tickAndGetNewPosition(dt)
+
+    position = nposition
+    angle = nangle
   }
 }

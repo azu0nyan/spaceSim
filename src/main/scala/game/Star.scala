@@ -1,5 +1,6 @@
 package game
 
+import game.entity.Entity
 import render.{DrawableSnapshot, ShapeWithDrawingParams}
 import utils.Shapes
 import utils.math.*

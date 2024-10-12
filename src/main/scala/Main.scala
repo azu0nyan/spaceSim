@@ -28,8 +28,8 @@ object Main {
     val gameDrawer = new GameDrawer(() => game.getDrawablesSnapshot(V2.ZERO, V2(1920, 1080)))
     Drawing.addDrawable(gameUpdater)
     Drawing.addDrawable(gameDrawer)
-    val ship = ShipMaker.makeShip()
-    game.addEntity(ship)
+    val ship = ShipMaker.makeShipEntity()
+    game.addWorldEntity(ship)
 
     GameControls.init(Drawing, game, ship)
 
