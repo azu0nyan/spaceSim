@@ -7,10 +7,8 @@ import utils.math.planar.V2
 class EntityControlledByRigidBody[DATA <: Entity](
                                                    override val inner: DATA,
                                                    initialMassData: MassData,
+                                                   val rb: RigidBody = new RigidBody()
                                                  ) extends WorldEntity[DATA] {
-
-  val rb = new RigidBody()
-
   updateMassData(initialMassData)
   
   def updateMassData(md: MassData): Unit = {

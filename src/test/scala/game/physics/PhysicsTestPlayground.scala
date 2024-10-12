@@ -31,7 +31,7 @@ object PhysicsTestPlayground {
 
     val shape = AARectangle(V2(-1), V2(1))
 
-    val md = PolygonOps.computeMass(shape.vertices.toIndexedSeq, 1)
+    val md = PolygonOps.computeMassData(shape.vertices.toIndexedSeq, 1)
 
     println(md)
 

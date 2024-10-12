@@ -1,6 +1,7 @@
 package game.ship
 
 import game.entity.{Entity, WorldEntity}
+import game.physics.{EntityControlledByRigidBody, MassData}
 import render.{DrawableSnapshot, ShapeWithDrawingParams}
 import utils.math.Scalar
 import utils.math.planar.V2
@@ -12,11 +13,11 @@ class Ship(
           ) extends Entity {
 
   var parentEntity: WorldEntity[_] = _
-  
-  override def onAttach(entity: WorldEntity[_]): Unit = 
-    parentEntity = entity  
-    
-    
+
+  override def onAttach(entity: WorldEntity[_]): Unit =
+    parentEntity = entity
+    entity.asInstanceOf[EntityControlledByRigidBody[_]].updateMassData(massData)
+
   def tick(dt: Scalar): Unit = {
     compartments.foreach(_.tick(dt))
   }
@@ -47,6 +48,9 @@ class Ship(
       compartmentShapes ++ modulesShapes
     ))
   end drawableSnapshot
+
+  def massData: MassData =
+    MassData.combineSeq(compartments.map(_.massData))
 
 
 }

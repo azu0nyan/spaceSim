@@ -1,13 +1,14 @@
 package game.ship
 
+import game.physics.{MassData, PolygonOps}
 import utils.BasicShape
 import utils.ShapeAtTransform
-import utils.Shapes.RectangleBasicShape
+import utils.Shapes.{CircleBasicShape, CompoundShape, RectangleBasicShape}
 import utils.math.Scalar
-import utils.math.planar.V2
+import utils.math.planar.{Polygon, V2}
 
 class MaterialProperties(
-                        var color: java.awt.Color = java.awt.Color.WHITE,
+                          var color: java.awt.Color = java.awt.Color.WHITE,
                         )
 
 class PhysicsProperties(
@@ -20,4 +21,8 @@ class PhysicsProperties(
                        ) {
   def shapeAtTransform: ShapeAtTransform =
     shape.atTransform(1.0, rotation, position)
+
+
+  def massData: MassData =
+    MassData.compute(shape, position, rotation, mass)
 }
