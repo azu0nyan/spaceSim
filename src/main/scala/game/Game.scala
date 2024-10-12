@@ -10,7 +10,10 @@ class Game {
   var worldEntities: Seq[WorldEntity[_]] = Seq()
 
   def tick(dt: Scalar): Unit = {
+    
+    worldEntities.foreach(_.move(dt)) 
     entities.foreach(_.tick(dt))
+    
   }
 
   def getDrawablesSnapshot(minPos: V2, maxPos: V2): Seq[DrawableSnapshot] =
