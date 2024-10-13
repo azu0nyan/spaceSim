@@ -40,12 +40,12 @@ object ShipMaker {
     //def!!!!! important
 
     def engineModules() = Seq(
-      CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
+      CompartmentModuleEngine(physicsProperties = new PhysicsProperties(
         position = V2(-5, -0.5),
         shape = CircleBasicShape(radius = .5),
         materialProperties = new MaterialProperties(java.awt.Color.WHITE)
       )),
-      CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
+      CompartmentModuleEngine(physicsProperties = new PhysicsProperties(
         position = V2(-5, 0.5),
         shape = CircleBasicShape(radius = .5),
         materialProperties = new MaterialProperties(java.awt.Color.WHITE)

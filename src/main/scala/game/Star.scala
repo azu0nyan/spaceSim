@@ -1,7 +1,7 @@
 package game
 
 import game.entity.Entity
-import render.{DrawableSnapshot, ShapeWithDrawingParams}
+import render.{DrawableSnapshot, DrawableSnapshotParams, ShapeWithDrawingParams}
 import utils.Shapes
 import utils.math.*
 import utils.math.planar.V2
@@ -20,7 +20,7 @@ class Star(
 
   def shape = Shapes.CircleBasicShape(position, radius)
 
-  override def drawableSnapshot: Option[DrawableSnapshot] = {
+  override def drawableSnapshot(params: DrawableSnapshotParams): Option[DrawableSnapshot] = {
     Some(
       DrawableSnapshot(
         Seq(ShapeWithDrawingParams(shape))

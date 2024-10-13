@@ -1,7 +1,7 @@
 package game
 
 import game.entity.{Entity, WorldEntity}
-import render.DrawableSnapshot
+import render.{DrawableSnapshot, DrawableSnapshotParams}
 import utils.math.Scalar
 import utils.math.planar.V2
 
@@ -16,8 +16,8 @@ class Game {
     
   }
 
-  def getDrawablesSnapshot(minPos: V2, maxPos: V2): Seq[DrawableSnapshot] =
-    entities.flatMap(_.drawableSnapshot) //todo use min max
+  def getDrawablesSnapshot(param: DrawableSnapshotParams): Seq[DrawableSnapshot] =
+    entities.flatMap(_.drawableSnapshot(param)) //todo use min max
 
   def addEntity(entity: Entity): Unit =
     entities = entity +: entities

@@ -1,6 +1,6 @@
 package utils
 
-import utils.Shape.{Circle, Rectangle}
+import utils.Shape.{Circle, Rectangle, Polygon}
 import utils.datastructures.spatial.AARectangle
 import utils.math.*
 import utils.math.planar.V2
@@ -45,5 +45,8 @@ object Shapes {
       CompoundShapeAtTransform(shapes.map(_.atTransform(scale, rotate, translate)))
   }
 
+  case class PolygonBasicShape(override val vertices: Seq[V2]) extends Polygon(vertices) with BasicShape
+  
+  case class PolygonShapeAtTransform(override val vertices: Seq[V2]) extends Polygon(vertices) with ShapeAtTransform
 
 }

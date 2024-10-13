@@ -1,6 +1,6 @@
 package game.entity
 
-import render.DrawableSnapshot
+import render.{DrawableSnapshot, DrawableSnapshotParams}
 import utils.math.Scalar
 
 trait Entity{
@@ -8,7 +8,7 @@ trait Entity{
   
   def onAttach(entity: WorldEntity[_]): Unit = {}
   
-  def drawableSnapshot: Option[DrawableSnapshot] = None
+  def drawableSnapshot(params: DrawableSnapshotParams): Option[DrawableSnapshot] = None
 }
 
 

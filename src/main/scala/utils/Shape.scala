@@ -1,6 +1,6 @@
 package utils
 
-import utils.Shapes.{CircleShapeAtTransform, RectangleShapeAtTransform}
+import utils.Shapes.{CircleShapeAtTransform, PolygonShapeAtTransform, RectangleShapeAtTransform}
 import utils.datastructures.spatial.AARectangle
 import utils.math.planar.{SegmentPlanar, V2}
 import utils.math.*
@@ -34,8 +34,15 @@ object Shape {
       .to(ArraySeq)
 
     def aabb: AARectangle = AARectangle.fromPoints(angles)
-    def atTransform(scale: Scalar, rotate: Scalar, translate: V2): ShapeAtTransform =
+    def atTransform(scale: Scalar, rotate: Scalar, translate: V2): RectangleShapeAtTransform =
       RectangleShapeAtTransform((center * scale).rotate(rotate) + translate, halfExtents * scale, ox.rotate(rotate))
+  }
+  
+  trait Polygon(val vertices: Seq[V2]) extends Shape {
+    val aabb: AARectangle = AARectangle.fromPoints(vertices)
+    
+    def atTransform(scale: Scalar, rotate: Scalar, translate: V2): PolygonShapeAtTransform =
+      PolygonShapeAtTransform(vertices.map(v => (v * scale).rotate(rotate) + translate))
   }
 }
 

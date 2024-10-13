@@ -1,8 +1,14 @@
 package render
 
+import utils.math.planar.V2
+
 import java.awt.Graphics2D
 
-
+case class DrawableSnapshotParams(
+                                   debug: Boolean,
+                                   minPos: V2,
+                                   maxPos: V2,
+                                 )
 case class DrawableSnapshot(
                              shapes: Seq[ShapeWithDrawingParams],
                              //todo texts

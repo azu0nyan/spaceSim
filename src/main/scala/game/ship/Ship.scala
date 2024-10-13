@@ -2,7 +2,8 @@ package game.ship
 
 import game.entity.{Entity, WorldEntity}
 import game.physics.{EntityControlledByRigidBody, MassData}
-import render.{DrawableSnapshot, ShapeWithDrawingParams}
+import game.ship.Ship.ShipControlState
+import render.{DrawableSnapshot, DrawableSnapshotParams, ShapeWithDrawingParams}
 import utils.math.Scalar
 import utils.math.planar.V2
 
@@ -12,26 +13,35 @@ class Ship(
             var compartments: Seq[Compartment] = Seq()
           ) extends Entity {
 
-  var parentEntity: WorldEntity[_] = _
+  val controlState = new ShipControlState(0, 0)
+  
+  var parentEntity: EntityControlledByRigidBody[Ship] = _
 
   override def onAttach(entity: WorldEntity[_]): Unit =
-    parentEntity = entity
-    entity.asInstanceOf[EntityControlledByRigidBody[_]].updateMassData(massData)
+    parentEntity = entity.asInstanceOf[EntityControlledByRigidBody[Ship]]
+    parentEntity.updateMassData(massData)
 
-  def tick(dt: Scalar): Unit = {
-    compartments.foreach(_.tick(dt))
-  }
+  def tick(dt: Scalar): Unit =
+    compartments.foreach(_.tick(dt, this))
 
-  override def drawableSnapshot: Option[DrawableSnapshot] =
-    Some(DrawableSnapshot(
-      compartments
-        .flatMap(_.drawables)
-        .map(sh => sh.atTransform(1.0, parentEntity.worldRotation, parentEntity.worldPosition))
-    )
+  override def drawableSnapshot(params: DrawableSnapshotParams): Option[DrawableSnapshot] =
+    Some(
+      DrawableSnapshot(
+        compartments
+          .flatMap(_.drawables(params))
+          .map(sh => sh.atTransform(1.0, parentEntity.worldRotation, parentEntity.worldPosition))
+      )
     )
 
   def massData: MassData =
     MassData.combineSeq(compartments.map(_.massData))
 
 
+}
+
+object Ship{
+  class ShipControlState(
+                        var forward: Scalar,
+                        var lr: Scalar
+                        )
 }

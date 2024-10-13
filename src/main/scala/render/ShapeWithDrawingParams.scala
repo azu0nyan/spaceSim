@@ -21,4 +21,8 @@ object ShapeWithDrawingParams {
       case rectangle: Shape.Rectangle =>
         val polygon = PolygonRegion(rectangle.angles)
         DrawingUtils.drawPolygon(polygon, g, shapeWithDrawingParams.fill, shapeWithDrawingParams.color, shapeWithDrawingParams.lineWidth)
+      case poly: Shape.Polygon =>
+        val polygon = PolygonRegion(poly.vertices)
+        DrawingUtils.drawPolygon(polygon, g, shapeWithDrawingParams.fill, shapeWithDrawingParams.color, shapeWithDrawingParams.lineWidth)
+        
 }
