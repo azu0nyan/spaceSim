@@ -40,19 +40,33 @@ object ShipMaker {
     //def!!!!! important
 
     def engineModules() = Seq(
-      CompartmentModuleEngine(physicsProperties = new PhysicsProperties(
-        position = V2(-5, -0.5),
-        shape = CircleBasicShape(radius = .5),
-        materialProperties = new MaterialProperties(java.awt.Color.WHITE)
-      )),
-      CompartmentModuleEngine(physicsProperties = new PhysicsProperties(
-        position = V2(-5, 0.5),
-        shape = CircleBasicShape(radius = .5),
-        materialProperties = new MaterialProperties(java.awt.Color.WHITE)
-      )),
+      CompartmentModuleEngine(
+        physicsProperties = new PhysicsProperties(
+          position = V2(-5, -0.5),
+          shape = CircleBasicShape(radius = .5),
+          materialProperties = new MaterialProperties(java.awt.Color.WHITE)
+        ),
+        thrust = 600,
+      ),
+      CompartmentModuleEngine(
+        physicsProperties = new PhysicsProperties(
+          position = V2(-5, 0.5),
+          shape = CircleBasicShape(radius = .5),
+          materialProperties = new MaterialProperties(java.awt.Color.WHITE)
+        ),
+        thrust = 600,
+      ),
     )
     val engine1 = Compartment(
-      modules = engineModules(),
+      modules = engineModules() :+  CompartmentModuleEngine(
+        physicsProperties = new PhysicsProperties(
+          rotation = -Math.PI / 2,
+          position = V2(5, -2.5),
+          shape = CircleBasicShape(radius = .5),
+          materialProperties = new MaterialProperties(java.awt.Color.WHITE)
+        ),
+        thrust = 150,
+      ),
       physicsProperties = new PhysicsProperties(
         position = V2(-10, 8),
         shape = RectangleBasicShape(halfExtents = V2(5, 2)),
@@ -61,7 +75,14 @@ object ShipMaker {
     )
 
     val engine2 = Compartment(
-      modules = engineModules(),
+      modules = engineModules() :+ CompartmentModuleEngine(
+        physicsProperties = new PhysicsProperties(
+          rotation = Math.PI / 2,
+          position = V2(5, 2.5),
+          shape = CircleBasicShape(radius = .5),
+          materialProperties = new MaterialProperties(java.awt.Color.WHITE)
+        ),
+        thrust = 150),
       physicsProperties = new PhysicsProperties(
         position = V2(-10, -8),
         shape = RectangleBasicShape(halfExtents = V2(5, 2)),
@@ -80,7 +101,7 @@ object ShipMaker {
 
     ship
   }
-  
+
   def makeShipEntity(): WorldEntity[Ship] =
     EntityControlledByRigidBody(ShipMaker.makeShip(), MassData(100, V2.ZERO, 100))
 }

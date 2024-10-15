@@ -14,7 +14,7 @@ class Ship(
           ) extends Entity {
 
   val controlState = new ShipControlState(0, 0)
-  
+
   var parentEntity: EntityControlledByRigidBody[Ship] = _
 
   override def onAttach(entity: WorldEntity[_]): Unit =
@@ -22,6 +22,7 @@ class Ship(
     parentEntity.updateMassData(massData)
 
   def tick(dt: Scalar): Unit =
+    applyControlsToEngines(controlState)
     compartments.foreach(_.tick(dt, this))
 
   override def drawableSnapshot(params: DrawableSnapshotParams): Option[DrawableSnapshot] =
@@ -37,11 +38,44 @@ class Ship(
     MassData.combineSeq(compartments.map(_.massData))
 
 
+  
+  def applyControlsToEngines(state: ShipControlState) =
+    engines.foreach{ e =>
+      var dir = V2(state.forward, state.lr)
+      val enginActivation = e.thrustDirection ** dir
+      if(enginActivation > 0) {
+        e.engine.active = enginActivation
+        parentEntity.applyForceLocal(e.thrustDirection * e.engine.thrust * enginActivation, e.position)
+      } else {
+        e.engine.active = 0
+      }
+    }
+    
+    
+  class EngineParams(
+                      var position: V2 = V2.ZERO,
+                      var rotation: Scalar = 0.0,
+                      val engine: CompartmentModuleEngine,
+                    ) {
+    val thrustDirection = V2.ox.rotate(rotation)
+  }
+  
+  def engines: Seq[EngineParams] =
+    compartments
+      .flatMap(c => c.modules
+        .collect { case m: CompartmentModuleEngine =>
+          EngineParams(
+            c.physicsProperties.position + m.physicsProperties.position.rotate(c.physicsProperties.rotation),
+            c.physicsProperties.rotation + m.physicsProperties.rotation,
+            m,
+          )
+        })
+
 }
 
-object Ship{
+object Ship {
   class ShipControlState(
-                        var forward: Scalar,
-                        var lr: Scalar
+                          var forward: Scalar,
+                          var lr: Scalar
                         )
 }

@@ -49,21 +49,27 @@ object GameControls {
     d.addDrawable(new drawing.core.SimpleDrawable(){
       override def drawAndUpdate(g: Graphics2D, dt: Scalar): Unit = {
 
-        var forceVector = .0
-        var lrVector = .0
-        if (Keys.upPressed) forceVector += 1
-        if (Keys.downPressed) forceVector -= 1
-        if (Keys.leftPressed) lrVector -= 1
-        if (Keys.rightPressed) lrVector += 1
+//        var forceVector = .0
+//        var lrVector = .0
+//        if (Keys.upPressed) forceVector += 1
+//        if (Keys.downPressed) forceVector -= 1
+//        if (Keys.leftPressed) lrVector -= 1
+//        if (Keys.rightPressed) lrVector += 1
 
-        forceVector *= 1500
-        lrVector *= 500
-
-        val shipE = ship.asInstanceOf[EntityControlledByRigidBody[Ship]]
-        val shipDir = V2.ox.rotate(shipE.rb.angle)
-        shipE.rb.applyForce(shipDir * forceVector , shipE.rb.position)
-        
-        shipE.rb.applyForce(shipDir.rotate90CW * lrVector, shipE.rb.position + shipDir * -1)
+        ship.inner.controlState.forward = 0
+        ship.inner.controlState.lr = 0
+        if (Keys.upPressed) ship.inner.controlState.forward = 1
+        if (Keys.downPressed) ship.inner.controlState.forward = -1
+        if (Keys.leftPressed) ship.inner.controlState.lr = 1
+        if (Keys.rightPressed) ship.inner.controlState.lr = -1
+//        forceVector *= 1500
+//        lrVector *= 500
+//
+//        val shipE = ship.asInstanceOf[EntityControlledByRigidBody[Ship]]
+//        val shipDir = V2.ox.rotate(shipE.rb.angle)
+//        shipE.rb.applyForce(shipDir * forceVector , shipE.rb.position)
+//        
+//        shipE.rb.applyForce(shipDir.rotate90CW * lrVector, shipE.rb.position + shipDir * -1)
         
         
         

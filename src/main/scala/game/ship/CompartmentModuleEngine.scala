@@ -10,7 +10,7 @@ import utils.math.planar.V2
 import java.awt.Color
 
 class CompartmentModuleEngine(
-                               thrust: Scalar = 1.0,
+                               val thrust: Scalar = 1.0,
                                var active: Scalar = 0.0,
                                override val physicsProperties: PhysicsProperties = new PhysicsProperties()
                              ) extends CompartmentModule {
@@ -24,7 +24,7 @@ class CompartmentModuleEngine(
 
 
   def enginShape(params: DrawableSnapshotParams): Option[ShapeWithDrawingParams] =
-    Option.when(active != 0) {
+    Option.when(active > 0) {
       ShapeWithDrawingParams(
         PolygonBasicShape(engineShapeVs)
           .atTransform(
@@ -32,7 +32,7 @@ class CompartmentModuleEngine(
             physicsProperties.rotation,
             physicsProperties.position
           ),
-        color = new Color(255, 255, 0, (255 * active).toInt),
+        color = new Color(255, 255, 0, math.min(255, (255 * active)).toInt),
       )
     }
 

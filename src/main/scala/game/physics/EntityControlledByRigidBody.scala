@@ -11,10 +11,12 @@ class EntityControlledByRigidBody[DATA <: Entity](
                                                  ) extends WorldEntity[DATA] {
   updateMassData(initialMassData)
   
+  /**inner body offset*/
+  var centroid = V2.ZERO
   def updateMassData(md: MassData): Unit = {
     rb.mass = md.mass
     rb.m_I = md.inertia
-    rb.position = md.centroid
+    centroid = md.centroid
   }
 
   override def move(dt: Scalar): Option[V2] = {
@@ -23,6 +25,10 @@ class EntityControlledByRigidBody[DATA <: Entity](
     rb.angle = rot
     //todo apply new position later
     Some(pos)
+  }
+  
+  def applyForceLocal(localForce: V2, localPoint: V2): Unit = {
+    rb.applyForce(localForce.rotate(rb.angle), (localPoint - centroid).rotate(rb.angle) + rb.position)
   }
 
   override def localPosition: V2 = rb.position
