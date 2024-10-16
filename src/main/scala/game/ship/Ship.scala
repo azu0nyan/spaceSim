@@ -29,15 +29,15 @@ class Ship(
   override def drawableSnapshot(params: DrawableSnapshotParams): Option[DrawableSnapshot] = {
     val shipDrawables = compartments
       .flatMap(_.drawables(params))
-      .map(sh => sh.atTransform(1.0, parentEntity.worldRotation, parentEntity.worldPosition))
-    
+      .map(sh => sh.atTransform(1.0, parentEntity.worldRotation, parentEntity.worldPosition - parentEntity.centroid.rotate(parentEntity.worldRotation)))
+
     val debugShapes = if(params.debug)
       Seq(
         DebugPointInWorldWithText(parentEntity.worldPosition, "WP", color = Color.WHITE),
-        DebugPointInWorldWithText(parentEntity.worldPosition + parentEntity.centroid.rotate(parentEntity.worldRotation), "С", color = Color.BLUE),
+        DebugPointInWorldWithText(parentEntity.worldPosition - parentEntity.centroid.rotate(parentEntity.worldRotation), "С", color = Color.BLUE),
       )
       else Seq()
-    
+
     Some(
       DrawableSnapshot(
         shapes = shipDrawables,
@@ -48,7 +48,7 @@ class Ship(
 
   def massData: MassData =
     val md = MassData.combineSeq(compartments.map(_.massData))
-    
+
     md
 
 

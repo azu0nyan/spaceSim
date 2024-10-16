@@ -22,7 +22,9 @@ object MassData {
     }
 
     localCenter /= mass
-    m_I -= mass * (localCenter ** localCenter)
+    m_I += mass * (localCenter ** localCenter)
+    
+//    m_I = Math.max(1.0, m_I) //todo why?
 
     MassData(mass, localCenter, m_I)
   }
@@ -30,11 +32,11 @@ object MassData {
   def compute(shape: BasicShape, position: V2, rotation: Scalar, mass: Scalar): MassData =
     shape match
       case Shapes.CircleBasicShape(center, radius) =>
-        val I = CircleOps.rotationalInertia(mass, radius, position)
+        val I = CircleOps.rotationalInertia(mass, radius, position + center)
         MassData(mass, position + center, I)
       case s@Shapes.RectangleBasicShape(center, halfExtents, ox) =>
-        val vs = s.angles
-        PolygonOps.computeMassData(vs, 1).copy(mass = mass, centroid = position + center)
+        val vs = s.angles.map(_ + position)
+        PolygonOps.computeMassData(vs, 1).copy(mass = mass)
       case Shapes.CompoundShape(shapes) =>
         if (shapes.nonEmpty)
           val shapeMass = mass / shapes.size

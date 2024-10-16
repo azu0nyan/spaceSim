@@ -28,7 +28,7 @@ class CompartmentModuleEngine(
       ShapeWithDrawingParams(
         PolygonBasicShape(engineShapeVs)
           .atTransform(
-            thrust.sqrt,
+            thrust.cbrt,
             physicsProperties.rotation,
             physicsProperties.position
           ),

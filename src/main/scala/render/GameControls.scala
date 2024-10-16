@@ -60,8 +60,8 @@ object GameControls {
         ship.inner.controlState.lr = 0
         if (Keys.upPressed) ship.inner.controlState.forward = 1
         if (Keys.downPressed) ship.inner.controlState.forward = -1
-        if (Keys.leftPressed) ship.inner.controlState.lr = 1
-        if (Keys.rightPressed) ship.inner.controlState.lr = -1
+        if (Keys.leftPressed) ship.inner.controlState.lr = -1
+        if (Keys.rightPressed) ship.inner.controlState.lr = 1
 //        forceVector *= 1500
 //        lrVector *= 500
 //

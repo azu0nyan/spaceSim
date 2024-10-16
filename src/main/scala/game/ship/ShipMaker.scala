@@ -7,13 +7,22 @@ import utils.Shapes.*
 
 object ShipMaker {
 
-  def makeShip(): Ship = {
+  def makeShipw(): Ship = {
     val hull = Compartment(
-      modules = Seq(        
+      modules = Seq(
+        CompartmentModuleEngine(
+          physicsProperties = new PhysicsProperties(
+            position = V2(10, -9),
+            rotation = Math.PI / 2.0,
+            shape = CircleBasicShape(radius = .5),
+            materialProperties = new MaterialProperties(java.awt.Color.WHITE)
+          ),
+          thrust = 49600,
+        ),  
         CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
           position = V2(-30, 0),
           shape = RectangleBasicShape(halfExtents = V2(4, 4)),
-          mass = 1500.0,
+          mass = 2500.0,
           materialProperties = new MaterialProperties(java.awt.Color.GREEN),
         )),
       ),
@@ -61,9 +70,36 @@ object ShipMaker {
     ship
   }
   
-  def makeShip2(): Ship = {
+  def makeShip(): Ship = {
     val hull = Compartment(
       modules = Seq(
+        CompartmentModuleEngine(
+          physicsProperties = new PhysicsProperties(
+            rotation = -Math.PI / 2,
+            position = V2(25, 6),
+            shape = CircleBasicShape(radius = .5),
+            materialProperties = new MaterialProperties(java.awt.Color.WHITE)
+          ),
+          thrust = 15500,
+        ),
+        CompartmentModuleEngine(
+          physicsProperties = new PhysicsProperties(
+            rotation = Math.PI / 2,
+            position = V2(25, -6),
+            shape = CircleBasicShape(radius = .5),
+            materialProperties = new MaterialProperties(java.awt.Color.WHITE)
+          ),
+          thrust = 15500,
+        ),
+        CompartmentModuleEngine(
+          physicsProperties = new PhysicsProperties(
+            rotation = -Math.PI,
+            position = V2(30, 0),
+            shape = CircleBasicShape(radius = .5),
+            materialProperties = new MaterialProperties(java.awt.Color.WHITE)
+          ),
+          thrust = 19500,
+        ),
         CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
           position = V2(-20, 0),
           shape = RectangleBasicShape(halfExtents = V2(1, 3)),
@@ -84,12 +120,6 @@ object ShipMaker {
           shape = RectangleBasicShape(halfExtents = V2(2, 1)),
           materialProperties = new MaterialProperties(java.awt.Color.WHITE)
         )),
-        CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
-          position = V2(-30, 0),
-          shape = RectangleBasicShape(halfExtents = V2(4, 4)),
-          mass = 1500.0,
-          materialProperties = new MaterialProperties(java.awt.Color.GREEN),
-        )),
       ),
       physicsProperties = new PhysicsProperties(
         shape = RectangleBasicShape(halfExtents = V2(30, 6)),
@@ -106,7 +136,7 @@ object ShipMaker {
           shape = CircleBasicShape(radius = .5),
           materialProperties = new MaterialProperties(java.awt.Color.WHITE)
         ),
-        thrust = 600,
+        thrust = 62600,
       ),
       CompartmentModuleEngine(
         physicsProperties = new PhysicsProperties(
@@ -114,19 +144,11 @@ object ShipMaker {
           shape = CircleBasicShape(radius = .5),
           materialProperties = new MaterialProperties(java.awt.Color.WHITE)
         ),
-        thrust = 600,
+        thrust = 62600,
       ),
     )
     val engine1 = Compartment(
-      modules = engineModules() :+ CompartmentModuleEngine(
-        physicsProperties = new PhysicsProperties(
-          rotation = -Math.PI / 2,
-          position = V2(5, -2.5),
-          shape = CircleBasicShape(radius = .5),
-          materialProperties = new MaterialProperties(java.awt.Color.WHITE)
-        ),
-        thrust = 150,
-      ),
+      modules = engineModules(),
       physicsProperties = new PhysicsProperties(
         position = V2(-10, 8),
         shape = RectangleBasicShape(halfExtents = V2(5, 2)),
@@ -135,14 +157,7 @@ object ShipMaker {
     )
 
     val engine2 = Compartment(
-      modules = engineModules() :+ CompartmentModuleEngine(
-        physicsProperties = new PhysicsProperties(
-          rotation = Math.PI / 2,
-          position = V2(5, 2.5),
-          shape = CircleBasicShape(radius = .5),
-          materialProperties = new MaterialProperties(java.awt.Color.WHITE)
-        ),
-        thrust = 150),
+      modules = engineModules(),
       physicsProperties = new PhysicsProperties(
         position = V2(-10, -8),
         shape = RectangleBasicShape(halfExtents = V2(5, 2)),

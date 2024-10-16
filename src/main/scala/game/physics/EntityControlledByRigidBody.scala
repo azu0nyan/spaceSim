@@ -14,6 +14,7 @@ class EntityControlledByRigidBody[DATA <: Entity](
     rb.mass = md.mass
     rb.m_I = md.inertia
     centroid = md.centroid
+    println(centroid)
   }
 
   override def move(dt: Scalar): Option[V2] = {
@@ -25,7 +26,7 @@ class EntityControlledByRigidBody[DATA <: Entity](
   }
   
   def applyForceLocal(localForce: V2, localPoint: V2): Unit = {
-    rb.applyForce(localForce.rotate(rb.angle), (localPoint - centroid).rotate(rb.angle) + rb.position)
+    rb.applyForce(localForce.rotate(rb.angle), localPoint.rotate(rb.angle) + rb.position - centroid.rotate(rb.angle))
   }
 
   override def localPosition: V2 = rb.position

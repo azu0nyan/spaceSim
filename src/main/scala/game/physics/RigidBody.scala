@@ -32,7 +32,8 @@ class RigidBody(
   def applyForce(force: V2, point: V2): Unit = {
     this.force += force
 
-    torque += (point.x - position.x) * force.y - (point.y - position.y) * force.x
+    val torqueDelta = (point.x - position.x) * force.y - (point.y - position.y) * force.x
+    torque += torqueDelta
   }
   /** Apply a force to the center of mass. */
   def applyForceToCenter(force: V2): Unit = {
