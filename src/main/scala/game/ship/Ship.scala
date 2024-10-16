@@ -3,6 +3,7 @@ package game.ship
 import game.entity.{Entity, WorldEntity}
 import game.physics.{EntityControlledByRigidBody, MassData}
 import game.ship.Ship.ShipControlState
+import render.DebugShapes.DebugPointInWorldWithText
 import render.{DrawableSnapshot, DrawableSnapshotParams, ShapeWithDrawingParams}
 import utils.math.Scalar
 import utils.math.planar.V2
@@ -25,20 +26,33 @@ class Ship(
     applyControlsToEngines(controlState)
     compartments.foreach(_.tick(dt, this))
 
-  override def drawableSnapshot(params: DrawableSnapshotParams): Option[DrawableSnapshot] =
+  override def drawableSnapshot(params: DrawableSnapshotParams): Option[DrawableSnapshot] = {
+    val shipDrawables = compartments
+      .flatMap(_.drawables(params))
+      .map(sh => sh.atTransform(1.0, parentEntity.worldRotation, parentEntity.worldPosition))
+    
+    val debugShapes = if(params.debug)
+      Seq(
+        DebugPointInWorldWithText(parentEntity.worldPosition, "WP", color = Color.WHITE),
+        DebugPointInWorldWithText(parentEntity.worldPosition + parentEntity.centroid.rotate(parentEntity.worldRotation), "С", color = Color.BLUE),
+      )
+      else Seq()
+    
     Some(
       DrawableSnapshot(
-        compartments
-          .flatMap(_.drawables(params))
-          .map(sh => sh.atTransform(1.0, parentEntity.worldRotation, parentEntity.worldPosition))
+        shapes = shipDrawables,
+        debugShapes = debugShapes,
       )
     )
+  }
 
   def massData: MassData =
-    MassData.combineSeq(compartments.map(_.massData))
+    val md = MassData.combineSeq(compartments.map(_.massData))
+    
+    md
 
 
-  
+
   def applyControlsToEngines(state: ShipControlState) =
     engines.foreach{ e =>
       var dir = V2(state.forward, state.lr)
@@ -50,8 +64,8 @@ class Ship(
         e.engine.active = 0
       }
     }
-    
-    
+
+
   class EngineParams(
                       var position: V2 = V2.ZERO,
                       var rotation: Scalar = 0.0,
@@ -59,7 +73,7 @@ class Ship(
                     ) {
     val thrustDirection = V2.ox.rotate(rotation)
   }
-  
+
   def engines: Seq[EngineParams] =
     compartments
       .flatMap(c => c.modules

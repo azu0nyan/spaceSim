@@ -9,8 +9,6 @@ object GameMaker {
   def initGame(): Game =
     val game = new Game
     
-    val star = new Star(V2.ZERO, 1)
-    game.entities = star +: game.entities
     addRandomStars(game, 25)
     
     for(i <- 0 until 64) {

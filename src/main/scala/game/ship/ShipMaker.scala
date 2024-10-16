@@ -9,6 +9,60 @@ object ShipMaker {
 
   def makeShip(): Ship = {
     val hull = Compartment(
+      modules = Seq(        
+        CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
+          position = V2(-30, 0),
+          shape = RectangleBasicShape(halfExtents = V2(4, 4)),
+          mass = 1500.0,
+          materialProperties = new MaterialProperties(java.awt.Color.GREEN),
+        )),
+      ),
+      physicsProperties = new PhysicsProperties(
+        shape = RectangleBasicShape(halfExtents = V2(30, 6)),
+        mass = 100.0,
+        materialProperties = new MaterialProperties(java.awt.Color.GRAY)
+      )
+    )
+    
+    val sideHull1 = Compartment(
+      modules = Seq(
+        
+      ),
+      physicsProperties = new PhysicsProperties(
+        shape = RectangleBasicShape(halfExtents = V2(6, 6)),
+        position = V2(-27, 9),
+        mass = 4000.0,
+        materialProperties = new MaterialProperties(java.awt.Color.GRAY)
+      )
+    )
+
+    val sideHull2 = Compartment(
+      modules = Seq(
+
+      ),
+      physicsProperties = new PhysicsProperties(
+        shape = RectangleBasicShape(halfExtents = V2(6, 6)),
+        position = V2(27, 9),
+        mass = 4000.0,
+        materialProperties = new MaterialProperties(java.awt.Color.GRAY)
+      )
+    )
+    
+
+    val ship = new Ship(
+      compartments = Seq(
+        hull,
+        sideHull1,
+        sideHull2,
+      )
+    )
+
+
+    ship
+  }
+  
+  def makeShip2(): Ship = {
+    val hull = Compartment(
       modules = Seq(
         CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
           position = V2(-20, 0),
@@ -29,6 +83,12 @@ object ShipMaker {
           position = V2(5, -2),
           shape = RectangleBasicShape(halfExtents = V2(2, 1)),
           materialProperties = new MaterialProperties(java.awt.Color.WHITE)
+        )),
+        CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
+          position = V2(-30, 0),
+          shape = RectangleBasicShape(halfExtents = V2(4, 4)),
+          mass = 1500.0,
+          materialProperties = new MaterialProperties(java.awt.Color.GREEN),
         )),
       ),
       physicsProperties = new PhysicsProperties(
@@ -58,7 +118,7 @@ object ShipMaker {
       ),
     )
     val engine1 = Compartment(
-      modules = engineModules() :+  CompartmentModuleEngine(
+      modules = engineModules() :+ CompartmentModuleEngine(
         physicsProperties = new PhysicsProperties(
           rotation = -Math.PI / 2,
           position = V2(5, -2.5),
@@ -103,5 +163,5 @@ object ShipMaker {
   }
 
   def makeShipEntity(): WorldEntity[Ship] =
-    EntityControlledByRigidBody(ShipMaker.makeShip(), MassData(100, V2.ZERO, 100))
+    EntityControlledByRigidBody(ShipMaker.makeShip())
 }

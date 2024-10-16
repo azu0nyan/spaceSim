@@ -6,13 +6,10 @@ import utils.math.planar.V2
 
 class EntityControlledByRigidBody[DATA <: Entity](
                                                    override val inner: DATA,
-                                                   initialMassData: MassData,
                                                    val rb: RigidBody = new RigidBody()
                                                  ) extends WorldEntity[DATA] {
-  updateMassData(initialMassData)
-  
   /**inner body offset*/
-  var centroid = V2.ZERO
+  var centroid: V2 = _
   def updateMassData(md: MassData): Unit = {
     rb.mass = md.mass
     rb.m_I = md.inertia
