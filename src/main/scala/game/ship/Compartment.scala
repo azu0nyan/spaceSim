@@ -4,8 +4,8 @@ import game.physics.MassData
 import render.{DrawableSnapshot, DrawableSnapshotParams, ShapeWithDrawingParams}
 import utils.math.Scalar
 
-class Compartment(
-                   var modules: Seq[CompartmentModule] = Seq(),
+class Section(
+                   var modules: Seq[SectionModule] = Seq(),
                    val physicsProperties: PhysicsProperties = new PhysicsProperties()
                  ) {
   def tick(dt: Scalar, ship: Ship): Unit =

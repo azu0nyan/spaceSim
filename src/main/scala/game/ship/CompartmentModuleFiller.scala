@@ -1,7 +1,7 @@
 package game.ship
 
-class CompartmentModuleFiller(
+class SectionModuleFiller(
   override val physicsProperties: PhysicsProperties = new PhysicsProperties()
-                             ) extends CompartmentModule {
+                             ) extends SectionModule {
 
 }

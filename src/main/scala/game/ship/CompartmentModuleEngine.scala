@@ -1,6 +1,6 @@
 package game.ship
 
-import game.ship.CompartmentModuleEngine.engineShapeVs
+import game.ship.SectionModuleEngine.engineShapeVs
 import render.{DrawableSnapshotParams, ShapeWithDrawingParams}
 import utils.Shapes.PolygonBasicShape
 import utils.datastructures.spatial.AARectangle
@@ -9,11 +9,11 @@ import utils.math.planar.V2
 
 import java.awt.Color
 
-class CompartmentModuleEngine(
+class SectionModuleEngine(
                                val thrust: Scalar = 1.0,
                                var active: Scalar = 0.0,
                                override val physicsProperties: PhysicsProperties = new PhysicsProperties()
-                             ) extends CompartmentModule {
+                             ) extends SectionModule {
 
   override def tick(dt: Scalar, ship: Ship): Unit = {
 
@@ -39,7 +39,7 @@ class CompartmentModuleEngine(
 
 }
 
-object CompartmentModuleEngine {
+object SectionModuleEngine {
   val engineShapeVs = Seq(V2(-1.5, -.5), V2(.0, -.1), V2(.0, .1), V2(-1.5, .5))
 
 }

@@ -3,7 +3,7 @@ package game.ship
 import render.{DrawableSnapshotParams, ShapeWithDrawingParams}
 import utils.math.Scalar
 
-trait CompartmentModule {
+trait SectionModule {
   def physicsProperties: PhysicsProperties
   
   def tick(dt: Scalar, ship: Ship): Unit = {}

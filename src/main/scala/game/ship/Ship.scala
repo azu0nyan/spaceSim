@@ -11,7 +11,7 @@ import utils.math.planar.V2
 import java.awt.Color
 
 class Ship(
-            var compartments: Seq[Compartment] = Seq()
+            var sections: Seq[Section] = Seq()
           ) extends Entity {
 
   val controlState = new ShipControlState(0, 0)
@@ -24,10 +24,10 @@ class Ship(
 
   def tick(dt: Scalar): Unit =
     applyControlsToEngines(controlState)
-    compartments.foreach(_.tick(dt, this))
+    sections.foreach(_.tick(dt, this))
 
   override def drawableSnapshot(params: DrawableSnapshotParams): Option[DrawableSnapshot] = {
-    val shipDrawables = compartments
+    val shipDrawables = sections
       .flatMap(_.drawables(params))
       .map(sh => sh.atTransform(1.0, parentEntity.worldRotation, parentEntity.worldPosition - parentEntity.centroid.rotate(parentEntity.worldRotation)))
 
@@ -47,7 +47,7 @@ class Ship(
   }
 
   def massData: MassData =
-    val md = MassData.combineSeq(compartments.map(_.massData))
+    val md = MassData.combineSeq(sections.map(_.massData))
 
     md
 
@@ -69,15 +69,15 @@ class Ship(
   class EngineParams(
                       var position: V2 = V2.ZERO,
                       var rotation: Scalar = 0.0,
-                      val engine: CompartmentModuleEngine,
+                      val engine: SectionModuleEngine,
                     ) {
     val thrustDirection = V2.ox.rotate(rotation)
   }
 
   def engines: Seq[EngineParams] =
-    compartments
+    sections
       .flatMap(c => c.modules
-        .collect { case m: CompartmentModuleEngine =>
+        .collect { case m: SectionModuleEngine =>
           EngineParams(
             c.physicsProperties.position + m.physicsProperties.position.rotate(c.physicsProperties.rotation),
             c.physicsProperties.rotation + m.physicsProperties.rotation,

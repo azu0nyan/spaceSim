@@ -1,6 +1,6 @@
 import drawing.Drawing
 import drawing.library.FpsCounter
-import game.ship.ShipMaker
+import game.ship.DebugShipMaker
 import game.{Game, GameMaker}
 import render.{DrawableSnapshotParams, GameControls, GameDrawer, GameUpdater}
 import utils.datastructures.IntV2
@@ -28,7 +28,7 @@ object Main {
     val gameDrawer = new GameDrawer(() => game.getDrawablesSnapshot(DrawableSnapshotParams(true, V2.ZERO, V2(1920, 1080))))
     Drawing.addDrawable(gameUpdater)
     Drawing.addDrawable(gameDrawer)
-    val ship = ShipMaker.makeShipEntity()
+    val ship = DebugShipMaker.makeShipEntity()
     game.addWorldEntity(ship)
 
     GameControls.init(Drawing, game, ship)

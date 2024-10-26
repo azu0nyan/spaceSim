@@ -5,12 +5,12 @@ import game.physics.{EntityControlledByRigidBody, MassData}
 import utils.math.planar.V2
 import utils.Shapes.*
 
-object ShipMaker {
+object DebugShipMaker {
 
   def makeShipw(): Ship = {
-    val hull = Compartment(
+    val hull = Section(
       modules = Seq(
-        CompartmentModuleEngine(
+        SectionModuleEngine(
           physicsProperties = new PhysicsProperties(
             position = V2(10, -9),
             rotation = Math.PI / 2.0,
@@ -19,7 +19,7 @@ object ShipMaker {
           ),
           thrust = 49600,
         ),  
-        CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
+        SectionModuleFiller(physicsProperties = new PhysicsProperties(
           position = V2(-30, 0),
           shape = RectangleBasicShape(halfExtents = V2(4, 4)),
           mass = 2500.0,
@@ -33,7 +33,7 @@ object ShipMaker {
       )
     )
     
-    val sideHull1 = Compartment(
+    val sideHull1 = Section(
       modules = Seq(
         
       ),
@@ -45,7 +45,7 @@ object ShipMaker {
       )
     )
 
-    val sideHull2 = Compartment(
+    val sideHull2 = Section(
       modules = Seq(
 
       ),
@@ -59,7 +59,7 @@ object ShipMaker {
     
 
     val ship = new Ship(
-      compartments = Seq(
+      sections = Seq(
         hull,
         sideHull1,
         sideHull2,
@@ -71,9 +71,9 @@ object ShipMaker {
   }
   
   def makeShip(): Ship = {
-    val hull = Compartment(
+    val hull = Section(
       modules = Seq(
-        CompartmentModuleEngine(
+        SectionModuleEngine(
           physicsProperties = new PhysicsProperties(
             rotation = -Math.PI / 2,
             position = V2(25, 6),
@@ -82,7 +82,7 @@ object ShipMaker {
           ),
           thrust = 15500,
         ),
-        CompartmentModuleEngine(
+        SectionModuleEngine(
           physicsProperties = new PhysicsProperties(
             rotation = Math.PI / 2,
             position = V2(25, -6),
@@ -91,7 +91,7 @@ object ShipMaker {
           ),
           thrust = 15500,
         ),
-        CompartmentModuleEngine(
+        SectionModuleEngine(
           physicsProperties = new PhysicsProperties(
             rotation = -Math.PI,
             position = V2(30, 0),
@@ -100,22 +100,22 @@ object ShipMaker {
           ),
           thrust = 19500,
         ),
-        CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
+        SectionModuleFiller(physicsProperties = new PhysicsProperties(
           position = V2(-20, 0),
           shape = RectangleBasicShape(halfExtents = V2(1, 3)),
           materialProperties = new MaterialProperties(java.awt.Color.RED)
         )),
-        CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
+        SectionModuleFiller(physicsProperties = new PhysicsProperties(
           position = V2(20, 0),
           shape = RectangleBasicShape(halfExtents = V2(1, 3)),
           materialProperties = new MaterialProperties(java.awt.Color.RED)
         )),
-        CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
+        SectionModuleFiller(physicsProperties = new PhysicsProperties(
           position = V2(-15, -2),
           shape = RectangleBasicShape(halfExtents = V2(2, 1)),
           materialProperties = new MaterialProperties(java.awt.Color.WHITE)
         )),
-        CompartmentModuleFiller(physicsProperties = new PhysicsProperties(
+        SectionModuleFiller(physicsProperties = new PhysicsProperties(
           position = V2(5, -2),
           shape = RectangleBasicShape(halfExtents = V2(2, 1)),
           materialProperties = new MaterialProperties(java.awt.Color.WHITE)
@@ -130,7 +130,7 @@ object ShipMaker {
     //def!!!!! important
 
     def engineModules() = Seq(
-      CompartmentModuleEngine(
+      SectionModuleEngine(
         physicsProperties = new PhysicsProperties(
           position = V2(-5, -0.5),
           shape = CircleBasicShape(radius = .5),
@@ -138,7 +138,7 @@ object ShipMaker {
         ),
         thrust = 62600,
       ),
-      CompartmentModuleEngine(
+      SectionModuleEngine(
         physicsProperties = new PhysicsProperties(
           position = V2(-5, 0.5),
           shape = CircleBasicShape(radius = .5),
@@ -147,7 +147,7 @@ object ShipMaker {
         thrust = 62600,
       ),
     )
-    val engine1 = Compartment(
+    val engine1 = Section(
       modules = engineModules(),
       physicsProperties = new PhysicsProperties(
         position = V2(-10, 8),
@@ -156,7 +156,7 @@ object ShipMaker {
       )
     )
 
-    val engine2 = Compartment(
+    val engine2 = Section(
       modules = engineModules(),
       physicsProperties = new PhysicsProperties(
         position = V2(-10, -8),
@@ -166,7 +166,7 @@ object ShipMaker {
     )
 
     val ship = new Ship(
-      compartments = Seq(
+      sections = Seq(
         hull,
         engine1,
         engine2
@@ -178,5 +178,5 @@ object ShipMaker {
   }
 
   def makeShipEntity(): WorldEntity[Ship] =
-    EntityControlledByRigidBody(ShipMaker.makeShip())
+    EntityControlledByRigidBody(DebugShipMaker.makeShip())
 }

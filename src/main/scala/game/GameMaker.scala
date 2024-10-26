@@ -1,6 +1,6 @@
 package game
 
-import game.ship.ShipMaker
+import game.ship.DebugShipMaker
 import utils.datastructures.spatial.AARectangle
 import utils.math.planar.V2
 import utils.math._
@@ -12,7 +12,7 @@ object GameMaker {
     addRandomStars(game, 25)
     
     for(i <- 0 until 64) {
-      val ship = ShipMaker.makeShipEntity()
+      val ship = DebugShipMaker.makeShipEntity()
       ship.setLocalPosition(V2(400, 0).rotate(i * TWO_PI / 64.0))
       ship.setLocalRotation(i * TWO_PI / 64.0)
 
