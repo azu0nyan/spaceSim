@@ -36,6 +36,8 @@ object Shapes {
 
     def atTransform(scale: Scalar, rotate: Scalar, translate: V2): CompoundShapeAtTransform =
       CompoundShapeAtTransform(shapes.map(_.atTransform(scale, rotate, translate)))
+
+    def area: Scalar = shapes.map(_.area).reduceOption(_ + _).getOrElse(0.0)
   }
 
   case class CompoundShapeAtTransform(shapes: Seq[ShapeAtTransform]) extends ShapeAtTransform {
@@ -43,10 +45,12 @@ object Shapes {
 
     def atTransform(scale: Scalar, rotate: Scalar, translate: V2): CompoundShapeAtTransform =
       CompoundShapeAtTransform(shapes.map(_.atTransform(scale, rotate, translate)))
+
+    def area: Scalar = shapes.map(_.area).reduceOption(_ + _).getOrElse(0.0)
   }
 
   case class PolygonBasicShape(override val vertices: Seq[V2]) extends Polygon(vertices) with BasicShape
-  
+
   case class PolygonShapeAtTransform(override val vertices: Seq[V2]) extends Polygon(vertices) with ShapeAtTransform
 
 }
