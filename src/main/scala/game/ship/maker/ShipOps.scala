@@ -36,10 +36,10 @@ object ShipOps {
   }
 
   def addEngineEndpoint(ship: Ship, interpreterStatе: InterpreterState): Either[CommandInterpreter.InterpreterError, Ship] = {
-    ???
+    Right(ship)
   }
 
   def addWeaponEndpoint(ship: Ship, interpreterStatе: InterpreterState): Either[CommandInterpreter.InterpreterError, Ship] = {
-    ???
+    Right(ship)
   }
 }

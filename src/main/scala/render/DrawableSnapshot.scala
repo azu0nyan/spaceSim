@@ -7,8 +7,8 @@ import java.awt.Graphics2D
 
 case class DrawableSnapshotParams(
                                    debug: Boolean,
-                                   minPos: V2,
-                                   maxPos: V2,
+                                   minPos: V2 = V2(Double.NegativeInfinity, Double.NegativeInfinity),
+                                   maxPos: V2 = V2(Double.PositiveInfinity, Double.PositiveInfinity)
                                  )
 case class DrawableSnapshot(
                              shapes: Seq[ShapeWithDrawingParams] = Seq(),

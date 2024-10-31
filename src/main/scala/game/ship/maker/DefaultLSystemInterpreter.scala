@@ -17,7 +17,7 @@ case class DefaultLSystemInterpreter[T](
                                          makeWeaponEndpoint: T,
                                          makeEngineEndpoint: T,
                                          throwStackEmpty: Boolean = true,
-                                         throwErrorOnUnknown: Boolean = true,
+                                         throwErrorOnUnknown: Boolean = false,
                                        ) extends LSystemInterpreter[T] {
 
   val mappings: (T, LSystemInterpreter.State[T]) => (Seq[Command], LSystemInterpreter.State[T]) = (t, state) =>

@@ -12,6 +12,8 @@ object ShipMaker {
       lSystem
         .nth(iteration)
 
+    println(lSystemOutput)
+    
     val commands =
       lSystemInterpreter
         .interpret(lSystem.initialState)(lSystemOutput)

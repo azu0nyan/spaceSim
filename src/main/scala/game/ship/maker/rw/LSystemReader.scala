@@ -83,7 +83,7 @@ object LSystemReader {
 
   def parseRule(s: String): (Char, Seq[Char]) = {
     val Array(a, b) = s.split("->")
-    (a(0), b.toSeq)
+    (a(0), b.strip().toSeq)
   }
 
 }
