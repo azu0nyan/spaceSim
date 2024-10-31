@@ -1,0 +1,26 @@
+!format simple
+
+
+position: 1.0 1.0
+
+rotation: 1
+
+width: 10
+
+height: 10
+
+makeConnections: false
+
+turnAngleDegrees: 90
+
+forwardLength: 10
+
+widthDelta: 10
+
+heightDelta: 10
+
+axiom: ^QO[-f*][+f*]fO[-f^][+f^]fqOe
+
+!rules
+Q -> QW
+e -> Oe
