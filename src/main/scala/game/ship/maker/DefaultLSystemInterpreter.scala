@@ -1,5 +1,6 @@
 package game.ship.maker
 
+import game.ship.maker.Command.OffsetWidth
 import utils.math.planar.V2
 
 case class DefaultLSystemInterpreter[T](
@@ -59,13 +60,7 @@ case class DefaultLSystemInterpreter[T](
       case `pushState` =>
         (Seq(), state.copy(stateStack = Some(state)))
       case `popState` =>
-        (
-          Seq(),
-          state.stateStack.getOrElse(
-            if (throwStackEmpty) throw new Exception(s"Stack is empty for state $state")
-            else state
-          )
-        )
+        popState(state)
       case `makeSection` =>
         (Seq(Command.MakeSection()), state)
       case `makeWeaponEndpoint` =>
@@ -76,6 +71,29 @@ case class DefaultLSystemInterpreter[T](
         throw new Exception(s"Unknown command $t for state $state")
       case _ =>
         (Seq(), state)
+
+  def popState(state: LSystemInterpreter.State[T]): (Seq[Command], LSystemInterpreter.State[T]) = {
+    val positionDelta = state.stateStack.map(value => value.position - state.position)
+
+    val rotationDelta = state.stateStack.map(value => value.rotation - state.rotation)
+
+    val widthDelta = state.stateStack.map(value => value.width - state.width)
+
+    val heightDelta = state.stateStack.map(value => value.height - state.height)
+
+    (
+      Seq(
+        positionDelta.map(Command.OffsetPosition),
+        rotationDelta.map(Command.OffsetRotation),
+        widthDelta.map(Command.OffsetHeight),
+        heightDelta.map(Command.OffsetWidth),
+      ).flatten,
+      state.stateStack.getOrElse(
+        if (throwStackEmpty) throw new Exception(s"Stack is empty for state $state")
+        else state
+      )
+    )
+  }
 
   def forwardCommands(state: LSystemInterpreter.State[T]): (Seq[Command], LSystemInterpreter.State[T]) =
     val positionDelta = V2.ox.rotate(state.rotation) * state.forwardLength
