@@ -85,8 +85,8 @@ case class DefaultLSystemInterpreter[T](
       Seq(
         positionDelta.map(Command.OffsetPosition),
         rotationDelta.map(Command.OffsetRotation),
-        widthDelta.map(Command.OffsetHeight),
-        heightDelta.map(Command.OffsetWidth),
+        widthDelta.map(Command.OffsetWidth),
+        heightDelta.map(Command.OffsetHeight),
       ).flatten,
       state.stateStack.getOrElse(
         if (throwStackEmpty) throw new Exception(s"Stack is empty for state $state")

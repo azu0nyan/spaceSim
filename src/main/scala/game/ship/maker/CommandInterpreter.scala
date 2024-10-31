@@ -61,6 +61,11 @@ object CommandInterpreter {
       case modWidth: Command.ModWidth => Right(state.copy(width = modWidth.mod(state.width)), ship)
       case modHeight: Command.ModHeight => Right(state.copy(height = modHeight.mod(state.height)), ship)
       case Command.MakeConnectionTo(offsetInLocal) => Right(state, ship) ///todo
-      case Command.OffsetPositionLocal(offsetInLocal) => Right(state.copy(position = state.position + offsetInLocal * V2.ox.rotate(state.rotation)), ship)
+      case Command.OffsetPositionLocal(offsetInLocal) =>
+        Right(state.copy(position =
+          state.position +
+            offsetInLocal.x * V2.ox.rotate(state.rotation) +
+            offsetInLocal.y * V2.oy.rotate(state.rotation)
+        ), ship)
 
 }
