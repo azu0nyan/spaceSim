@@ -11,6 +11,10 @@ import scala.util.Try
 object CommandInterpreter {
 
   sealed trait InterpreterError
+  
+  case object NoSectionToAddWeapon extends InterpreterError
+  case object NoSectionToAddEngine extends InterpreterError
+  
 
   case class InterpreterState(
                                width: Scalar,

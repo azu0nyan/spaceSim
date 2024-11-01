@@ -7,12 +7,12 @@ import utils.math.planar.V2
 
 object ShipOps {
 
-  def addSection(ship: Ship, interpreterStatе: InterpreterState): Either[CommandInterpreter.InterpreterError, Ship] = {
+  def addSection(ship: Ship, interpreterState: InterpreterState): Either[CommandInterpreter.InterpreterError, Ship] = {
     val shape = RectangleBasicShape(
       center = V2.ZERO,
       halfExtents = V2(
-        interpreterStatе.width / 2.0,
-        interpreterStatе.height / 2.0,
+        interpreterState.width / 2.0,
+        interpreterState.height / 2.0,
       ),
       ox = V2.ox,
     )
@@ -21,8 +21,8 @@ object ShipOps {
 
     val section = new Section(
       physicsProperties = new PhysicsProperties(
-        position = interpreterStatе.position,
-        rotation = interpreterStatе.rotation,
+        position = interpreterState.position,
+        rotation = interpreterState.rotation,
         shape = shape,
         mass = mass,
       )
@@ -35,11 +35,11 @@ object ShipOps {
     )
   }
 
-  def addEngineEndpoint(ship: Ship, interpreterStatе: InterpreterState): Either[CommandInterpreter.InterpreterError, Ship] = {
+  def addEngineEndpoint(ship: Ship, interpreterState: InterpreterState): Either[CommandInterpreter.InterpreterError, Ship] = {
     Right(ship)
   }
 
-  def addWeaponEndpoint(ship: Ship, interpreterStatе: InterpreterState): Either[CommandInterpreter.InterpreterError, Ship] = {
+  def addWeaponEndpoint(ship: Ship, interpreterState: InterpreterState): Either[CommandInterpreter.InterpreterError, Ship] = {
     Right(ship)
   }
 }

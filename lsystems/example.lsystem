@@ -1,26 +1,22 @@
 !format simple
 
 
-position: 1.0 1.0
 
-rotation: 1
-
+position: 0.0 0.0
+rotation: 0
 width: 10
-
 height: 10
-
 makeConnections: false
-
-turnAngleDegrees: 45
-
+turnAngleDegrees: 30
 forwardLength: 10
-
 widthDelta: 10
-
 heightDelta: 10
 
-axiom: ^QO[-fO*][+fO*]fO[-fO^][+fO^]fqOe
+axiom: LA
+#H[-ffffO]
 
 !rules
-Q -> QW
-e -> Oe
+L -> 1
+1 -> 2
+2 -> WW+L
+A ->O[+fOA][-fOA]
