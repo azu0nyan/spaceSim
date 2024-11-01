@@ -7,7 +7,7 @@ import utils.{Shape, ShapeAtTransform, Shapes}
 
 import java.awt.{Color, Graphics2D}
 
-case class ShapeWithDrawingParams(shape: Shape, color: Color = Color.WHITE, fill: Boolean = true, lineWidth: Int = 1) {
+case class ShapeWithDrawingParams(shape: Shape, color: Color, fill: Boolean = true, lineWidth: Int = 1, zOrder: Int) {
 
   def atTransform(scale: Scalar, rotate: Scalar, translate: V2): ShapeWithDrawingParams =
     this.copy(shape = shape.atTransform(scale, rotate, translate))

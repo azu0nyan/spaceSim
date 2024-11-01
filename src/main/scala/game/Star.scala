@@ -6,6 +6,8 @@ import utils.Shapes
 import utils.math.*
 import utils.math.planar.V2
 
+import java.awt.Color
+
 
 class Star(
             val position: V2 = V2.ZERO,
@@ -23,7 +25,7 @@ class Star(
   override def drawableSnapshot(params: DrawableSnapshotParams): Option[DrawableSnapshot] = {
     Some(
       DrawableSnapshot(
-        Seq(ShapeWithDrawingParams(shape))
+        Seq(ShapeWithDrawingParams(shape, color = Color.WHITE, zOrder = render.ZOrder.star)),
       )
     )
   }

@@ -10,8 +10,10 @@ import scala.collection.immutable.ArraySeq
 
 trait Shape {
   def atTransform(scale: Scalar, rotate: Scalar, translate: V2): ShapeAtTransform
-  
+
   def area: Scalar
+
+  def contains(p: V2): Boolean
 }
 
 object Shape {
@@ -21,6 +23,10 @@ object Shape {
       CircleShapeAtTransform((center * scale).rotate(rotate) + translate, radius * scale)
 
     def area: Scalar = PI * radius * radius
+
+    val radiusSquared = radius * radius
+
+    override def contains(p: V2): Boolean = (center - p).lengthSquared <= radiusSquared
   }
 
 
@@ -40,17 +46,28 @@ object Shape {
     def aabb: AARectangle = AARectangle.fromPoints(angles)
     def atTransform(scale: Scalar, rotate: Scalar, translate: V2): RectangleShapeAtTransform =
       RectangleShapeAtTransform((center * scale).rotate(rotate) + translate, halfExtents * scale, ox.rotate(rotate))
-    
+
     def area: Scalar = 4 * halfExtents.x * halfExtents.y
+
+    //todo check
+    override def contains(p: V2): Boolean = {
+      val local = p - center
+      val localX = local ** ox
+      val localY = local ** ox.rotate90CCW
+      -halfExtents.x <= localX && localX <= halfExtents.x &&
+        -halfExtents.y <= localY && localY <= halfExtents.y
+    }
   }
-  
+
   trait Polygon(val vertices: Seq[V2]) extends Shape {
     val aabb: AARectangle = AARectangle.fromPoints(vertices)
-    
+
     def atTransform(scale: Scalar, rotate: Scalar, translate: V2): PolygonShapeAtTransform =
       PolygonShapeAtTransform(vertices.map(v => (v * scale).rotate(rotate) + translate))
-      
+
     val area: Scalar = PolygonRegion(vertices).area
+    
+    override def contains(p: V2): Boolean = PolygonRegion(vertices).contains(p)
   }
 }
 

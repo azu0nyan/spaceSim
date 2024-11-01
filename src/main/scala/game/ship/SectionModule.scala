@@ -11,5 +11,5 @@ trait SectionModule {
   def massData = physicsProperties.massData
 
   def drawables(params: DrawableSnapshotParams): Seq[ShapeWithDrawingParams] =
-    Seq(ShapeWithDrawingParams(physicsProperties.shapeAtTransform, physicsProperties.materialProperties.color))
+    Seq(ShapeWithDrawingParams(physicsProperties.shapeAtTransform, physicsProperties.materialProperties.color,zOrder =  render.ZOrder.Ship.endpoint))
 }

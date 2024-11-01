@@ -62,6 +62,7 @@ object LSystemReader {
           .copy(turnAngleDegrees = kvMap.get("turnAngleDegrees").map(_.toDouble).getOrElse(default.turnAngleDegrees))
           .copy(forwardLength = kvMap.get("forwardLength").map(_.toDouble).getOrElse(default.forwardLength))
           .copy(makeConnections = kvMap.get("makeConnections").map(_.toBoolean).getOrElse(default.makeConnections))
+          .copy(sizesDivisor = kvMap.get("sizesDivisor").map(_.toDouble).getOrElse(default.sizesDivisor))
 
 
       LSystem(

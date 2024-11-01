@@ -21,6 +21,7 @@ object LSystemInterpreter {
                        forwardLength: Scalar = 1,
                        widthDelta: Scalar = 1,
                        heightDelta: Scalar = 1,
+                       sizesDivisor: Scalar = 10,
                        stateStack: Option[State[T]] = None,
                      ) {
     def turnAngle = Math.toRadians(turnAngleDegrees)

@@ -18,7 +18,7 @@ class Section(
     )
 
   def drawables(params: DrawableSnapshotParams): Seq[ShapeWithDrawingParams] =
-    Seq(ShapeWithDrawingParams(physicsProperties.shapeAtTransform, physicsProperties.materialProperties.color)) ++
+    Seq(ShapeWithDrawingParams(physicsProperties.shapeAtTransform, physicsProperties.materialProperties.color,zOrder = render.ZOrder.Ship.hull)) ++
       modules.flatMap(_.drawables(params)).map(sh => sh.atTransform(1.0, physicsProperties.rotation, physicsProperties.position))
 
 

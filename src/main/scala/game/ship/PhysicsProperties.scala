@@ -25,4 +25,17 @@ class PhysicsProperties(
 
   def massData: MassData =
     MassData.compute(shape, position, rotation, mass)
+
+  /** for attaching childs */
+  def toLocalSpacePosition(v: V2): V2 = {
+    val local = v - position
+    val ox = V2.ox.rotate(rotation)
+    val oy = ox.rotate90CCW
+    V2(local ** ox, local ** oy)
+  }
+  
+  def toLocalSpaceRotation (v: Scalar): Scalar =
+    v - rotation
+    
+    
 }

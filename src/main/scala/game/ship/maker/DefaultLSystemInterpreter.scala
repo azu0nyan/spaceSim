@@ -17,6 +17,8 @@ case class DefaultLSystemInterpreter[T](
                                          makeSection: T,
                                          makeWeaponEndpoint: T,
                                          makeEngineEndpoint: T,
+                                         divSizes: T,
+                                         mullSizes: T,
                                          throwStackEmpty: Boolean = true,
                                          throwErrorOnUnknown: Boolean = false,
                                        ) extends LSystemInterpreter[T] {
@@ -55,6 +57,36 @@ case class DefaultLSystemInterpreter[T](
           Seq(Command.OffsetHeight(-state.heightDelta)),
           state.copy(height = state.height - state.heightDelta)
         )
+      case `divSizes` =>
+        val newWidth = state.width / state.sizesDivisor
+        val newHeight = state.height / state.sizesDivisor
+        (
+          Seq(
+            Command.OffsetWidth(newWidth - state.width),
+            Command.OffsetHeight(newHeight - state.height)
+          ),
+          state.copy(
+            width = newWidth,
+            height = newHeight,
+            widthDelta = state.widthDelta / state.sizesDivisor,
+            heightDelta = state.heightDelta / state.sizesDivisor,
+          )
+        )
+
+      case `mullSizes` =>
+        (
+          Seq(
+            Command.OffsetWidth(state.width * state.sizesDivisor - state.width),
+            Command.OffsetHeight(state.height * state.sizesDivisor - state.height)
+          ),
+          state.copy(
+            width = state.width * state.sizesDivisor,
+            height = state.height * state.sizesDivisor,
+            widthDelta = state.widthDelta * state.sizesDivisor,
+            heightDelta = state.heightDelta * state.sizesDivisor,
+          )
+        )
+
       case `toggleMakeConnections` =>
         (Seq(), state.copy(makeConnections = !state.makeConnections))
       case `pushState` =>
@@ -131,5 +163,7 @@ object DefaultLSystemInterpreter {
     makeSection = 'O',
     makeWeaponEndpoint = '*',
     makeEngineEndpoint = '^',
+    divSizes = '/',
+    mullSizes = '\\',
   )
 }

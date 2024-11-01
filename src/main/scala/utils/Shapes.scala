@@ -38,6 +38,8 @@ object Shapes {
       CompoundShapeAtTransform(shapes.map(_.atTransform(scale, rotate, translate)))
 
     def area: Scalar = shapes.map(_.area).reduceOption(_ + _).getOrElse(0.0)
+
+    override def contains(p: V2): Boolean = shapes.exists(_.contains(p))
   }
 
   case class CompoundShapeAtTransform(shapes: Seq[ShapeAtTransform]) extends ShapeAtTransform {
@@ -47,7 +49,9 @@ object Shapes {
       CompoundShapeAtTransform(shapes.map(_.atTransform(scale, rotate, translate)))
 
     def area: Scalar = shapes.map(_.area).reduceOption(_ + _).getOrElse(0.0)
-  }
+    
+    override def contains(p: V2): Boolean = shapes.exists(_.contains(p))
+  }                                                                      
 
   case class PolygonBasicShape(override val vertices: Seq[V2]) extends Polygon(vertices) with BasicShape
 

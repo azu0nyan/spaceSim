@@ -21,7 +21,12 @@ object DrawableSnapshot {
   
   
   def draw(drawableSnapshot: DrawableSnapshot)(g: Graphics2D): Unit = {
-    drawableSnapshot.shapes.foreach(ShapeWithDrawingParams.draw(_)(g))
+    drawableSnapshot
+      .shapes
+      .groupBy(_.zOrder)
+      .toSeq
+      .sortBy(_._1)
+      .foreach(_._2.foreach(ShapeWithDrawingParams.draw(_)(g)))
     
     drawableSnapshot.debugShapes.foreach(DebugShapes.draw(_)(g))
   }
