@@ -2,19 +2,22 @@ package game.ship.maker.rw
 
 import drawing.Drawing
 import game.physics.EntityControlledByRigidBody
-import game.ship.maker.{DefaultLSystemInterpreter, LSystem, ShipMaker}
+import game.ship.Ship
+import game.ship.maker.{DefaultLSystemInterpreter, LSystem, LSystemInterpreter, ShipMaker}
 import render.{DrawableSnapshot, DrawableSnapshotParams}
 import utils.datastructures.IntV2
 import utils.math.planar.V2
 
-import java.awt.Font
+import java.awt.event.KeyEvent
+import java.awt.{Color, Font}
+import java.io.File
 import scala.io.Source
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 object LSystemsVisualiser {
 
 
-  var lSystem: LSystem[Char] = _
+  var lSystem: LSystem[Char] = LSystem[Char](Seq(), Map(), LSystemInterpreter.State())
   def sheduleReload() = {
     import java.io.IOException
     import java.nio.file._
@@ -38,7 +41,13 @@ object LSystemsVisualiser {
         } else {
           for (event <- kind.asScala) {
             if (event.kind() == StandardWatchEventKinds.ENTRY_MODIFY)
-              readLSystemFromFile("")
+              readLSystemFromFile()
+
+            if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE)
+              reloadSystemList()
+
+            if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE)
+              reloadSystemList()
           }
         }
 
@@ -49,19 +58,62 @@ object LSystemsVisualiser {
   }
 
 
-  def readLSystemFromFile(path: String) = {
+  def readLSystemFromFile() = {
     import java.io.IOException
     import java.nio.file._
 
-
-    //    var lines = Source.fromResource("lsystems/example.lsystem").getLines().toSeq
-    var lines = Source.fromFile("lsystems/example.lsystem").getLines().toSeq
-    var lSystemLoaded = LSystemReader
+    val lines = Source.fromFile("lsystems/" + currentSystem).getLines().toSeq
+    val lSystemLoaded = LSystemReader
       .readFromLines(lines)
 
     println(s"Loaded lsystem ${lSystemLoaded}")
     lSystem = lSystemLoaded.right.get
   }
+
+  def reloadSystemList(): Unit = {
+    lsystemList = new File("lsystems")
+      .listFiles()
+      .map(_.getName)
+      .filter(_.endsWith(".lsystem"))
+      .toList
+
+    currentSystem = lsystemList
+      .find(_ == currentSystem)
+      .orElse(lsystemList.headOption)
+      .getOrElse("lsystem folder empty")
+
+    println(s"Reloaded system list ${lsystemList}")
+  }
+
+  def next() = {
+    currentSystem = lsystemList
+      .dropWhile(_ != currentSystem)
+      .drop(1)
+      .headOption
+      .orElse(lsystemList.headOption)
+      .getOrElse(currentSystem)
+
+    println(s"Switching to ${currentSystem}")
+    
+    readLSystemFromFile()
+  }
+
+  def prev() = {
+    currentSystem = lsystemList
+      .reverse
+      .dropWhile(_ != currentSystem)
+      .drop(1)
+      .headOption
+      .orElse(lsystemList.lastOption)
+      .getOrElse(currentSystem)
+    println(s"Switching to ${currentSystem}")
+
+    readLSystemFromFile()
+  }
+
+  var currentSystem: String = "example.lsystem"
+
+  var lsystemList: Seq[String] = Seq()
 
 
   def main(args: Array[String]): Unit = {
@@ -79,8 +131,8 @@ object LSystemsVisualiser {
     Drawing.FpsCounter.font = new Font("", Font.BOLD, 30)
     Drawing.FpsCounter.dy = 100
 
-
-    readLSystemFromFile("")
+    reloadSystemList()
+    readLSystemFromFile()
     sheduleReload()
 
     var spawnDelta = 150
@@ -89,12 +141,21 @@ object LSystemsVisualiser {
     val rows = math.sqrt(count).floor
     val cols = count / rows
 
+
+    Drawing.addKeyBinding(KeyEvent.VK_LEFT, prev())
+
+    Drawing.addKeyBinding(KeyEvent.VK_RIGHT, next())
+
     for (i <- 0 until count) {
 
       val x = i % cols.toInt - cols / 2
       val y = i / cols.toInt - rows / 2
 
       Drawing.addDrawer(g => {
+        g.setColor(Color.WHITE)
+        g.setFont(new Font("", Font.BOLD, 20))
+        g.drawString(s"Current: $currentSystem", 20, 60)
+
 
         val ship = ShipMaker
           .makeShip(lSystem = lSystem, lSystemInterpreter = DefaultLSystemInterpreter.string)(i + min)

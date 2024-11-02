@@ -14,7 +14,6 @@ class EntityControlledByRigidBody[DATA <: Entity](
     rb.mass = md.mass
     rb.m_I = md.inertia
     centroid = md.centroid
-    println(centroid)
   }
 
   override def move(dt: Scalar): Option[V2] = {

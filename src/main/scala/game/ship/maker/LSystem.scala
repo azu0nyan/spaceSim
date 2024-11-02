@@ -3,7 +3,7 @@ package game.ship.maker
 case class LSystem[T](
                        axiom: Seq[T],
                        rules: Map[T, Seq[T]],
-                       initialState: LSystemInterpreter.State[T] = LSystemInterpreter.State(),
+                       initialState: LSystemInterpreter.State[T],
                      ) {
   def applyTo(chars: Seq[T]): Seq[T] =
     chars.flatMap(c =>
