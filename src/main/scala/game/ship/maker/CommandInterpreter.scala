@@ -49,10 +49,10 @@ object CommandInterpreter {
   @tailrec
   def foldLeftWhile[ACC, ERR, EL](fold: (ACC, EL) => Either[ERR, ACC])(acc: ACC)(els: Seq[EL]): Either[ERR, ACC] =
     els match
-      case Nil => Right(acc)
-      case h :: t => fold(acc, h) match
+      case _ if els.isEmpty =>  Right(acc)
+      case els => fold(acc, els.head) match
         case Left(value) => Left(value)
-        case Right(value) => foldLeftWhile(fold)(value)(t)
+        case Right(value) => foldLeftWhile(fold)(value)(els.tail)
 
 
   def interpretCommand(state: InterpreterState, ship: Ship)(command: Command): Either[InterpreterError, (InterpreterState, Ship)] =

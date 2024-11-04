@@ -1,8 +1,9 @@
-package game.ship.maker.rw
+package game.ship.maker
 
 import drawing.Drawing
 import game.physics.EntityControlledByRigidBody
 import game.ship.Ship
+import game.ship.maker.rw.LSystemReader
 import game.ship.maker.{DefaultLSystemInterpreter, LSystem, LSystemInterpreter, ShipMaker}
 import render.{DrawableSnapshot, DrawableSnapshotParams}
 import utils.datastructures.IntV2
@@ -18,12 +19,19 @@ object LSystemsVisualiser {
 
 
   var lSystem: LSystem[Char] = LSystem[Char](Seq(), Map(), LSystemInterpreter.State())
+  
+  var currentSystem: String = "example.lsystem"
+  
+
+  var lsystemList: Seq[String] = Seq()
+
+  private val dir = "lsystems"
   def sheduleReload() = {
     import java.io.IOException
     import java.nio.file._
 
 
-    val directoryPath = Paths.get("lsystems/")
+    val directoryPath = Paths.get(dir)
     val watchService = FileSystems.getDefault.newWatchService
 
     directoryPath.register(watchService,
@@ -62,7 +70,7 @@ object LSystemsVisualiser {
     import java.io.IOException
     import java.nio.file._
 
-    val lines = Source.fromFile("lsystems/" + currentSystem).getLines().toSeq
+    val lines = Source.fromFile(dir + "/" +currentSystem).getLines().toSeq
     val lSystemLoaded = LSystemReader
       .readFromLines(lines)
 
@@ -71,7 +79,7 @@ object LSystemsVisualiser {
   }
 
   def reloadSystemList(): Unit = {
-    lsystemList = new File("lsystems")
+    lsystemList = new File(dir)
       .listFiles()
       .map(_.getName)
       .filter(_.endsWith(".lsystem"))
@@ -111,9 +119,7 @@ object LSystemsVisualiser {
     readLSystemFromFile()
   }
 
-  var currentSystem: String = "example.lsystem"
 
-  var lsystemList: Seq[String] = Seq()
 
 
   def main(args: Array[String]): Unit = {
