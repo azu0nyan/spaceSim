@@ -1,0 +1,24 @@
+!format simple
+
+
+
+position: 0.0 0.0
+rotation: 0
+width: 15
+height: 5
+makeConnections: true
+turnAngleDegrees: 15
+forwardLength: 5
+widthDelta: 5
+heightDelta: 2.5
+sizesDivisor:5
+
+
+axiom: fefb[AO]BfcfB[AO]bfef--------fefb[AO]bfcfb[AO]Bfcf--------fcfB[AO]bfcfb[AO]bfef--------
+
+!rules
+A -> HWWA
+b -> efb
+B -> cfB
+e -> [f++++++f------------O/w^f]
+c -> [f++++++f------------O/w*f]

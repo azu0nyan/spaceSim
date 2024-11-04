@@ -1,0 +1,22 @@
+!format simple
+
+
+
+position: 0.0 0.0
+rotation: 0
+width: 10
+height: 10
+makeConnections: false
+turnAngleDegrees: 45
+forwardLength: 10
+widthDelta: 10
+heightDelta: 10
+sizesDivisor:5
+
+
+axiom: WWWWC++C++C++E
+#H[-ffffO]
+
+!rules
+C -> CfO[--/w*]f
+E -> EfO[++/ww^]f

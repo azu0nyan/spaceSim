@@ -138,14 +138,22 @@ case class DefaultLSystemInterpreter[T](
       state.copy(position = newPosition)
     )
 
-  def interpret(initial: LSystemInterpreter.State[T])(lSystemOutput: Seq[T]): Seq[Command] =
+  def interpret(initial: LSystemInterpreter.State[T])(lSystemOutput: Seq[T]): Seq[Command] = {
+    val initialCommands = Seq(
+      Command.SetPosition(initial.position),
+      Command.SetRotation(initial.rotation),
+      Command.SetWidth(initial.width),
+      Command.SetHeight(initial.height),
+    )
+    
     lSystemOutput
-      .foldLeft((Seq[Command](), initial)) {
+      .foldLeft((initialCommands, initial)) {
         case ((commands, state), t) =>
           val (newCommands, newState) = mappings(t, state)
           (commands ++ newCommands, newState)
       }
       ._1
+  }
 }
 
 object DefaultLSystemInterpreter {

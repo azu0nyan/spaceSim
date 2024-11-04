@@ -1,0 +1,20 @@
+!format simple
+
+
+position: 0.0 0.0
+rotation: 0
+width: 15
+height: 5
+makeConnections: true
+turnAngleDegrees: 30
+forwardLength: 5
+widthDelta: 5
+heightDelta: 2.5
+sizesDivisor:5
+
+
+axiom: Off[+ffO][-ffO]
+
+!rules
+A -> HA
+e -> ------fOf------
